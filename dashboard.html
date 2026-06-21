@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מרכז אבחון ישיבתי - מודל הולנד</title>
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 0; padding: 0; min-height: 100vh; }
+    header { background: rgba(42, 59, 76, 0.97); color: #fff; padding: 2.5rem 1rem 1.5rem 1rem; text-align: center; backdrop-filter: blur(10px); border-bottom: 3px solid #667eea; }
+    h1 { margin: 0 0 0.5em 0; font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    .desc-main { color: #e0e0e0; font-size: 1.15em; margin: 1em auto 0 auto; max-width: 700px; line-height: 1.7; background: rgba(0,0,0,0.08); border-radius: 10px; padding: 1em; }
+    .main-section { margin: 2.5em auto 2em auto; max-width: 700px; background: linear-gradient(135deg, #fffbe6 0%, #e0e7ff 100%); border-radius: 18px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); padding: 2em 1.5em; text-align: center; border: 2px solid #ffd700; position: relative; }
+    .main-link { background: linear-gradient(45deg, #ffd700, #ffec80); color: #2a3b4c; padding: 1.1em 2.2em; border-radius: 12px; display: inline-block; margin: 1em 0 0.5em 0; font-weight: bold; font-size: 1.25em; box-shadow: 0 4px 15px rgba(255, 215, 0, 0.18); transition: all 0.3s ease; border: 2px solid #ffe066; }
+    .main-link:hover { background: linear-gradient(45deg, #ffe066, #ffd700); transform: translateY(-2px) scale(1.04); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.25); text-decoration: none; }
+    .main-section .desc { color: #2a3b4c; font-size: 1.08em; margin: 0.5em 0 0 0; }
+    .highlight { border: 2.5px solid #667eea; }
+    .section-title { font-size: 1.45em; color: #2a3b4c; margin: 2.5em 0 0.5em 0; display: flex; align-items: center; gap: 0.5em; }
+    .section-desc { color: #555; font-size: 1.05em; margin-bottom: 1.2em; }
+    .category-section { margin: 2em auto; max-width: 900px; background: rgba(255,255,255,0.97); border-radius: 15px; box-shadow: 0 8px 32px rgba(0,0,0,0.08); padding: 1.5em 2em; backdrop-filter: blur(10px); transition: transform 0.3s ease, box-shadow 0.3s ease; border-top: 3px solid #e0e7ff; }
+    .category-section:not(:last-child) { margin-bottom: 2.5em; }
+    ul { list-style: none; padding: 0; }
+    li { margin: 0.8em 0; padding: 0.8em; border-radius: 10px; transition: all 0.3s ease; border: 1px solid transparent; display: flex; align-items: flex-start; gap: 0.7em; background: #f7f9fa; }
+    li:hover { background-color: #e0e7ff; border-color: #667eea; transform: translateX(-5px); }
+    .file-type { display: flex; align-items: center; min-width: 3em; text-align: center; font-size: 1.2em; border-radius: 6px; padding: 0.2em 0.7em; font-weight: bold; margin-left: 0.5em; }
+    .pdf { background: linear-gradient(45deg, #e57373, #ef5350); color: #fff; }
+    .html { background: linear-gradient(45deg, #64b5f6, #42a5f5); color: #fff; }
+    .md { background: linear-gradient(45deg, #81c784, #66bb6a); color: #fff; }
+    .desc { color: #555; font-size: 0.98em; margin: 0.5em 0 0.7em 0; line-height: 1.4; }
+    .file-info { display: flex; justify-content: flex-end; align-items: center; margin-top: 0.2em; font-size: 0.9em; color: #888; gap: 1em; }
+    .file-size { background: #f0f0f0; padding: 0.2em 0.5em; border-radius: 10px; }
+    .file-date { color: #999; }
+    .pulse { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+    .faq-section { background: linear-gradient(135deg, #e0e7ff 0%, #fffbe6 100%); border-radius: 15px; max-width: 800px; margin: 3em auto 2em auto; padding: 2em 1.5em; box-shadow: 0 4px 16px rgba(102,126,234,0.08); }
+    .faq-title { font-size: 1.25em; color: #2a3b4c; margin-bottom: 1em; font-weight: bold; }
+    .faq-q { font-weight: bold; color: #667eea; margin-top: 1em; }
+    .faq-a { color: #444; margin-bottom: 0.7em; }
+    .help-btn { position: fixed; left: 20px; bottom: 20px; background: #667eea; color: #fff; border: none; border-radius: 50%; width: 54px; height: 54px; font-size: 2em; box-shadow: 0 4px 16px rgba(102,126,234,0.18); cursor: pointer; z-index: 1000; transition: background 0.2s; }
+    .help-btn:hover { background: #764ba2; }
+    .help-popup { display: none; position: fixed; left: 90px; bottom: 30px; background: #fff; color: #2a3b4c; border-radius: 12px; box-shadow: 0 4px 24px rgba(102,126,234,0.18); padding: 1.2em 1.5em; max-width: 320px; z-index: 1001; font-size: 1.05em; }
+    .help-popup.active { display: block; }
+    @media (max-width: 700px) { .main-section, .category-section, .faq-section { padding: 1em 0.5em; } .main-link { font-size: 1em; } .section-title { font-size: 1.1em; } }
+    .lang-tab {
+      background: none;
+      border: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.08em;
+      padding: 0.3em 1.1em;
+      border-radius: 2em;
+      cursor: pointer;
+      transition: background 0.18s, color 0.18s;
+      outline: none;
+      position: relative;
+    }
+    .lang-tab.selected {
+      background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(102,126,234,0.18);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+    .lang-tab:hover:not(.selected) {
+      background: #333;
+      color: #ffd700;
+    }
+    #langSwitcher {
+      margin-right: 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div style="display:flex;justify-content:space-between;align-items:center;max-width:900px;margin:0 auto;">
+      <h1 id="main-title">🎯 מרכז האבחון הישיבתי - מודל הולנד</h1>
+      <nav id="langSwitcher" style="display:flex;gap:0.5em;align-items:center;background:#222;border-radius:2em;padding:0.2em 0.7em;box-shadow:0 2px 8px rgba(0,0,0,0.10);">
+        <button class="lang-tab" data-lang="en" type="button">EN</button>
+        <span style="color:#888;font-weight:bold;">|</span>
+        <button class="lang-tab" data-lang="ru" type="button">RU</button>
+        <span style="color:#888;font-weight:bold;">|</span>
+        <button class="lang-tab" data-lang="he" type="button">עברית</button>
+      </nav>
+    </div>
+    <div class="desc-main" id="main-desc">
+      ברוכים הבאים! כאן תמצאו את כל השאלונים, המבחנים, המחקרים והכלים לייעוץ מקצועי לבחורי ישיבה. בחרו מבחן, עיינו במחקרים, או הורידו כלים - הכל במקום אחד, ברור ונגיש.
+    </div>
+  </header>
+
+  <div class="main-section highlight">
+    <a href="02_HTML_Assessments/yeshiva_career_assessment_main.html" class="main-link pulse" id="main-btn">⭐ מעבר מהיר למבחן הראשי (מומלץ)</a>
+    <div class="desc" id="main-btn-desc">זהו המבחן הרשמי והמעודכן ביותר, עם שמירה אוטומטית, ניתוח תוצאות אישי ותמיכה מלאה במובייל.</div>
+  </div>
+
+  <div class="category-section">
+    <div class="section-title" id="cat-html-title">🌐 מבחנים אינטראקטיביים (HTML)</div>
+    <div class="section-desc" id="cat-html-desc">כל הגרסאות של דפי המבחן המקוונים. הגרסה הראשית מומלצת, שאר הגרסאות הן קודמות או ניסיוניות.</div>
+    <ul>
+      <li><span class="file-type html">HTML</span> <a href="02_HTML_Assessments/yeshiva_career_assessment_main.html" id="html-main-link">גרסה ראשית (רשמית)</a><div class="desc" id="html-main-desc">הגרסה הרשמית והמעודכנת ביותר של מבחן הנטיות המקצועיות לבחורי ישיבה.</div><div class="file-info"><span class="file-size" id="html-main-size">(מעודכן)</span><span class="file-date" id="html-main-date">עודכן עכשיו</span></div></li>
+      <li><span class="file-type html">HTML</span> <a href="02_HTML_Assessments/yeshiva_career_assessment (1).html" id="html-v1-link">גרסה 1</a><div class="desc" id="html-v1-desc">גרסה קודמת של דף המבחן המקוון.</div></li>
+      <li><span class="file-type html">HTML</span> <a href="02_HTML_Assessments/yeshiva_career_assessment (2).html" id="html-v2-link">גרסה 2</a><div class="desc" id="html-v2-desc">גרסה נוספת עם שיפורים/שינויים.</div></li>
+      <li><span class="file-type html">HTML</span> <a href="02_HTML_Assessments/yeshiva_career_assessment (3).html" id="html-v3-link">גרסה 3</a><div class="desc" id="html-v3-desc">גרסה מתקדמת/ניסיונית של דף המבחן.</div></li>
+      <li><span class="file-type html">HTML</span> <a href="02_HTML_Assessments/yeshiva_career_assessment (4).html" id="html-v4-link">גרסה 4 (Claude)</a><div class="desc" id="html-v4-desc">גרסה חדשה ומתקדמת שהוכנה על ידי Claude - עיצוב משופר, שמירה אוטומטית, ניתוח תוצאות, תמיכה במובייל ועוד.</div><div class="file-info"><span class="file-size" id="html-v4-size">(חדש)</span><span class="file-date" id="html-v4-date">עודכן עכשיו</span></div></li>
+    </ul>
+  </div>
+
+  <div class="category-section">
+    <div class="section-title" id="cat-pdf-title">📄 שאלונים, מחקרים וקבצי PDF</div>
+    <div class="section-desc" id="cat-pdf-desc">כל השאלונים, המיפויים והמחקרים בפורמט PDF.</div>
+    <ul>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/שאלון נטיות מקצועיות - בשפה ישיבתית אמיתית.pdf" id="pdf-yeshiva-link">שאלון נטיות מקצועיות - בשפה ישיבתית אמיתית</a><div class="desc" id="pdf-yeshiva-desc">שאלון מותאם לשפה ולתרבות הישיבתית.</div><div class="file-info"><span class="file-size" id="pdf-yeshiva-size">2.4MB</span><span class="file-date" id="pdf-yeshiva-date">גרסה אחרונה</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/שאלון נטיות מקצועיות מורחב - 300 שאלות.pdf" id="pdf-300-link">שאלון נטיות מקצועיות מורחב - 300 שאלות</a><div class="desc" id="pdf-300-desc">שאלון מעמיק עם 300 פריטים לפי מודל הולנד.</div><div class="file-info"><span class="file-size" id="pdf-300-size">2.2MB</span><span class="file-date" id="pdf-300-date">גרסה מורחבת</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/שאלון נטיות מקצועיות לבוגרי ישיבה קטנה.pdf" id="pdf-ktana-link">שאלון נטיות מקצועיות לבוגרי ישיבה קטנה</a><div class="desc" id="pdf-ktana-desc">שאלון נטיות מקצועיות לבוגרי ישיבה קטנה.</div><div class="file-info"><span class="file-size" id="pdf-ktana-size">726KB</span><span class="file-date" id="pdf-ktana-date">גרסה מותאמת</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/מיפוי מקצועות מפורט לפי תחומי הולנד מורחב.pdf" id="pdf-map-adv-link">מיפוי מקצועות מפורט לפי תחומי הולנד מורחב</a><div class="desc" id="pdf-map-adv-desc">טבלת מקצועות מורחבת לפי תחומי הולנד.</div><div class="file-info"><span class="file-size" id="pdf-map-adv-size">1.7MB</span><span class="file-date" id="pdf-map-adv-date">מיפוי מורחב</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/מיפוי מקצועות מפורט לפי תחומי הולנד.pdf" id="pdf-map-link">מיפוי מקצועות מפורט לפי תחומי הולנד</a><div class="desc" id="pdf-map-desc">טבלת מקצועות לפי תחומי הולנד.</div><div class="file-info"><span class="file-size" id="pdf-map-size">1.1MB</span><span class="file-date" id="pdf-map-date">מיפוי בסיסי</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/כלים מעשיים לשיפור השאלון וניתוח תוצאות.pdf" id="pdf-tools-link">כלים מעשיים לשיפור השאלון וניתוח תוצאות</a><div class="desc" id="pdf-tools-desc">המלצות וכלים לייעול השאלון וניתוחו.</div><div class="file-info"><span class="file-size" id="pdf-tools-size">1.0MB</span><span class="file-date" id="pdf-tools-date">כלים מעשיים</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/שאלון נטיות ותחומי עניין - גרסה משופרת.pdf" id="pdf-improved-link">שאלון נטיות ותחומי עניין - גרסה משופרת</a><div class="desc" id="pdf-improved-desc">גרסה משופרת של שאלון נטיות ותחומי עניין.</div><div class="file-info"><span class="file-size" id="pdf-improved-size">395KB</span><span class="file-date" id="pdf-improved-date">גרסה משופרת</span></div></li>
+      <li><span class="file-type pdf">PDF</span> <a href="01_Questionnaires/ניתוח מעמיק ושיפור שאלון נטיות מקצועיות לבוגרי ישיבה.pdf" id="pdf-analysis-link">ניתוח מעמיק ושיפור שאלון נטיות מקצועיות לבוגרי ישיבה</a><div class="desc" id="pdf-analysis-desc">מחקר וניתוח מעמיק של שאלון נטיות מקצועיות.</div><div class="file-info"><span class="file-size" id="pdf-analysis-size">688KB</span><span class="file-date" id="pdf-analysis-date">ניתוח מעמיק</span></div></li>
+    </ul>
+  </div>
+
+  <div class="category-section">
+    <div class="section-title" id="cat-map-title">🗺️ מיפוי מקצועות (Career Mapping)</div>
+    <div class="section-desc" id="cat-map-desc">קבצי מיפוי מקצועות לפי תחומי הולנד.</div>
+    <ul>
+      <li><span class="file-type md">MD</span> <a href="03_Career_Mapping/detailed_career_mapping.md" id="map-main-link">מיפוי מקצועות - גרסה ראשית</a><div class="desc" id="map-main-desc">מיפוי מקצועות עיקרי לפי תחומי הולנד.</div><div class="file-info"><span class="file-size" id="map-main-size">9.5KB</span><span class="file-date" id="map-main-date">גרסה ראשית</span></div></li>
+      <li><span class="file-type md">MD</span> <a href="03_Career_Mapping/detailed_career_mapping (1).md" id="map-v1-link">מיפוי מקצועות - גרסה 1</a><div class="desc" id="map-v1-desc">גרסה נוספת/מורחבת של מיפוי מקצועות.</div><div class="file-info"><span class="file-size" id="map-v1-size">16KB</span><span class="file-date" id="map-v1-date">גרסה 1</span></div></li>
+    </ul>
+  </div>
+
+  <div class="category-section">
+    <div class="section-title" id="cat-tools-title">🔧 כלי ניתוח ומחקר</div>
+    <div class="section-desc" id="cat-tools-desc">כלי עזר לניתוח תוצאות ומחקרי עומק.</div>
+    <ul>
+      <li><span class="file-type md">MD</span> <a href="04_Analysis_Tools/practical_assessment_tools.md" id="tools-main-link">כלים מעשיים לניתוח</a><div class="desc" id="tools-main-desc">כלים מעשיים לניתוח תוצאות השאלונים.</div><div class="file-info"><span class="file-size" id="tools-main-size">9.1KB</span><span class="file-date" id="tools-main-date">כלים מעשיים</span></div></li>
+      <li><span class="file-type md">MD</span> <a href="04_Analysis_Tools/yeshiva_assessment_analysis.md" id="tools-analysis-link">ניתוח שאלון</a><div class="desc" id="tools-analysis-desc">ניתוח תוצאות שאלון אבחון ישיבתי.</div><div class="file-info"><span class="file-size" id="tools-analysis-size">8.3KB</span><span class="file-date" id="tools-analysis-date">ניתוח שאלון</span></div></li>
+    </ul>
+  </div>
+
+  <div class="category-section">
+    <div class="section-title" id="cat-md-title">📝 גרסאות משופרות ושאלונים (Markdown)</div>
+    <div class="section-desc" id="cat-md-desc">שאלונים, דוגמאות וגרסאות מתקדמות בפורמט Markdown.</div>
+    <ul>
+      <li><span class="file-type md">MD</span> <a href="05_Improved_Versions/extended_yeshiva_questionnaire_300.md" id="md-300-link">שאלון 300 שאלות (מורחב)</a><div class="desc" id="md-300-desc">שאלון נטיות מקצועיות מורחב - 300 שאלות (Markdown).</div><div class="file-info"><span class="file-size" id="md-300-size">27KB</span><span class="file-date" id="md-300-date">300 שאלות</span></div></li>
+      <li><span class="file-type md">MD</span> <a href="05_Improved_Versions/yeshiva_language_questionnaire.md" id="md-lang-link">שאלון שפה</a><div class="desc" id="md-lang-desc">שאלון נטיות מקצועיות בשפה ישיבתית.</div><div class="file-info"><span class="file-size" id="md-lang-size">9.3KB</span><span class="file-date" id="md-lang-date">שאלון שפה</span></div></li>
+      <li><span class="file-type md">MD</span> <a href="05_Improved_Versions/improved_questions_sample.md" id="md-sample-link">דוגמת שאלות משופרת</a><div class="desc" id="md-sample-desc">דוגמת שאלות משופרת - גרסה עיקרית.</div><div class="file-info"><span class="file-size" id="md-sample-size">5.3KB</span><span class="file-date" id="md-sample-date">דוגמה עיקרית</span></div></li>
+      <li><span class="file-type md">MD</span> <a href="05_Improved_Versions/improved_questions_sample (1).md" id="md-sample1-link">דוגמת שאלות משופרת 1</a><div class="desc" id="md-sample1-desc">דוגמת שאלות משופרת - גרסה 1.</div><div class="file-info"><span class="file-size" id="md-sample1-size">5.3KB</span><span class="file-date" id="md-sample1-date">דוגמה 1</span></div></li>
+      <li><span class="file-type md">MD</span> <a href="05_Improved_Versions/improved_questions_sample (2).md" id="md-sample2-link">דוגמת שאלות משופרת 2</a><div class="desc" id="md-sample2-desc">דוגמת שאלות משופרת - גרסה 2.</div><div class="file-info"><span class="file-size" id="md-sample2-size">5.3KB</span><span class="file-date" id="md-sample2-date">דוגמה 2</span></div></li>
+    </ul>
+  </div>
+
+  <div class="faq-section">
+    <div class="faq-title" id="faq-title">❓ שאלות נפוצות</div>
+    <div class="faq-q" id="faq-q1">איך בוחרים מבחן?</div>
+    <div class="faq-a" id="faq-a1">מומלץ לבחור בגרסה הראשית (הכפתור הצהוב בראש הדף). שאר הגרסאות הן קודמות או ניסיוניות.</div>
+    <div class="faq-q" id="faq-q2">מה ההבדל בין הגרסאות?</div>
+    <div class="faq-a" id="faq-a2">הגרסה הראשית כוללת את כל הפיצ'רים המתקדמים, שמירה אוטומטית, ניתוח תוצאות אישי ותמיכה במובייל. שאר הגרסאות הן גרסאות קודמות או ניסיוניות.</div>
+    <div class="faq-q" id="faq-q3">איך שומרים תוצאות?</div>
+    <div class="faq-a" id="faq-a3">בסיום המבחן ניתן להדפיס, לשמור או לשתף את התוצאות. יש גם אפשרות לשמור היסטוריית מבחנים.</div>
+    <div class="faq-q" id="faq-q4">למי מיועדים הכלים והמחקרים?</div>
+    <div class="faq-a" id="faq-a4">הכלים והמחקרים מיועדים למדריכים, יועצים, הורים ולבחורים עצמם - להעמקה והכוונה מקצועית.</div>
+  </div>
+
+  <button class="help-btn" onclick="document.getElementById('helpPopup').classList.toggle('active')">?</button>
+  <div class="help-popup" id="helpPopup">
+    <b id="help-title">ברוכים הבאים למרכז האבחון!</b><br>
+    <span id="help-desc">כאן תמצאו את כל הכלים, השאלונים והמחקרים במקום אחד.</span><br>
+    <ul style="margin:0.5em 0 0 0; padding-right:1.2em;">
+      <li id="help-li1">להתחלת מבחן - לחצו על הכפתור הצהוב בראש הדף</li>
+      <li id="help-li2">לצפייה בגרסאות קודמות - גללו לאזור "מבחנים אינטראקטיביים"</li>
+      <li id="help-li3">למחקרים, מיפויים וכלים - עברו לקטגוריה המתאימה</li>
+      <li id="help-li4">לשאלות נוספות - עיינו ב-FAQ או פנו אלינו</li>
+    </ul>
+    <div style="text-align:center;margin-top:0.7em;font-size:0.95em;color:#667eea;" id="help-success">בהצלחה!</div>
+  </div>
+
+  <footer style="text-align:center;color:#fff;margin:2em 0 1em 0;font-size:0.95em;text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">
+    <span id="footer-built">נבנה אוטומטית</span> • <span id="footer-rights">כל הזכויות שמורות ©</span> • <span id="lastUpdate">עודכן היום</span>
+  </footer>
+  <script>
+    // Translation object
+    const translations = {
+      he: {
+        dir: 'rtl', lang: 'he',
+        mainTitle: '🎯 מרכז האבחון הישיבתי - מודל הולנד',
+        mainDesc: 'ברוכים הבאים! כאן תמצאו את כל השאלונים, המבחנים, המחקרים והכלים לייעוץ מקצועי לבחורי ישיבה. בחרו מבחן, עיינו במחקרים, או הורידו כלים - הכל במקום אחד, ברור ונגיש.',
+        mainBtn: '⭐ מעבר מהיר למבחן הראשי (מומלץ)',
+        mainBtnDesc: 'זהו המבחן הרשמי והמעודכן ביותר, עם שמירה אוטומטית, ניתוח תוצאות אישי ותמיכה מלאה במובייל.',
+        // קטגוריות
+        catHtmlTitle: '🌐 מבחנים אינטראקטיביים (HTML)',
+        catHtmlDesc: 'כל הגרסאות של דפי המבחן המקוונים. הגרסה הראשית מומלצת, שאר הגרסאות הן קודמות או ניסיוניות.',
+        htmlMainLink: 'גרסה ראשית (רשמית)', htmlMainDesc: 'הגרסה הרשמית והמעודכנת ביותר של מבחן הנטיות המקצועיות לבחורי ישיבה.', htmlMainSize: '(מעודכן)', htmlMainDate: 'עודכן עכשיו',
+        htmlV1Link: 'גרסה 1', htmlV1Desc: 'גרסה קודמת של דף המבחן המקוון.',
+        htmlV2Link: 'גרסה 2', htmlV2Desc: 'גרסה נוספת עם שיפורים/שינויים.',
+        htmlV3Link: 'גרסה 3', htmlV3Desc: 'גרסה מתקדמת/ניסיונית של דף המבחן.',
+        htmlV4Link: 'גרסה 4 (Claude)', htmlV4Desc: 'גרסה חדשה ומתקדמת שהוכנה על ידי Claude - עיצוב משופר, שמירה אוטומטית, ניתוח תוצאות, תמיכה במובייל ועוד.', htmlV4Size: '(חדש)', htmlV4Date: 'עודכן עכשיו',
+        catPdfTitle: '📄 שאלונים, מחקרים וקבצי PDF',
+        catPdfDesc: 'כל השאלונים, המיפויים והמחקרים בפורמט PDF.',
+        pdfYeshivaLink: 'שאלון נטיות מקצועיות - בשפה ישיבתית אמיתית', pdfYeshivaDesc: 'שאלון מותאם לשפה ולתרבות הישיבתית.', pdfYeshivaSize: '2.4MB', pdfYeshivaDate: 'גרסה אחרונה',
+        pdf300Link: 'שאלון נטיות מקצועיות מורחב - 300 שאלות', pdf300Desc: 'שאלון מעמיק עם 300 פריטים לפי מודל הולנד.', pdf300Size: '2.2MB', pdf300Date: 'גרסה מורחבת',
+        pdfKtanaLink: 'שאלון נטיות מקצועיות לבוגרי ישיבה קטנה', pdfKtanaDesc: 'שאלון נטיות מקצועיות לבוגרי ישיבה קטנה.', pdfKtanaSize: '726KB', pdfKtanaDate: 'גרסה מותאמת',
+        pdfMapAdvLink: 'מיפוי מקצועות מפורט לפי תחומי הולנד מורחב', pdfMapAdvDesc: 'טבלת מקצועות מורחבת לפי תחומי הולנד.', pdfMapAdvSize: '1.7MB', pdfMapAdvDate: 'מיפוי מורחב',
+        pdfMapLink: 'מיפוי מקצועות מפורט לפי תחומי הולנד', pdfMapDesc: 'טבלת מקצועות לפי תחומי הולנד.', pdfMapSize: '1.1MB', pdfMapDate: 'מיפוי בסיסי',
+        pdfToolsLink: 'כלים מעשיים לשיפור השאלון וניתוח תוצאות', pdfToolsDesc: 'המלצות וכלים לייעול השאלון וניתוחו.', pdfToolsSize: '1.0MB', pdfToolsDate: 'כלים מעשיים',
+        pdfImprovedLink: 'שאלון נטיות ותחומי עניין - גרסה משופרת', pdfImprovedDesc: 'גרסה משופרת של שאלון נטיות ותחומי עניין.', pdfImprovedSize: '395KB', pdfImprovedDate: 'גרסה משופרת',
+        pdfAnalysisLink: 'ניתוח מעמיק ושיפור שאלון נטיות מקצועיות לבוגרי ישיבה', pdfAnalysisDesc: 'מחקר וניתוח מעמיק של שאלון נטיות מקצועיות.', pdfAnalysisSize: '688KB', pdfAnalysisDate: 'ניתוח מעמיק',
+        catMapTitle: '🗺️ מיפוי מקצועות (Career Mapping)', catMapDesc: 'קבצי מיפוי מקצועות לפי תחומי הולנד.',
+        mapMainLink: 'מיפוי מקצועות - גרסה ראשית', mapMainDesc: 'מיפוי מקצועות עיקרי לפי תחומי הולנד.', mapMainSize: '9.5KB', mapMainDate: 'גרסה ראשית',
+        mapV1Link: 'מיפוי מקצועות - גרסה 1', mapV1Desc: 'גרסה נוספת/מורחבת של מיפוי מקצועות.', mapV1Size: '16KB', mapV1Date: 'גרסה 1',
+        catToolsTitle: '🔧 כלי ניתוח ומחקר', catToolsDesc: 'כלי עזר לניתוח תוצאות ומחקרי עומק.',
+        toolsMainLink: 'כלים מעשיים לניתוח', toolsMainDesc: 'כלים מעשיים לניתוח תוצאות השאלונים.', toolsMainSize: '9.1KB', toolsMainDate: 'כלים מעשיים',
+        toolsAnalysisLink: 'ניתוח שאלון', toolsAnalysisDesc: 'ניתוח תוצאות שאלון אבחון ישיבתי.', toolsAnalysisSize: '8.3KB', toolsAnalysisDate: 'ניתוח שאלון',
+        catMdTitle: '📝 גרסאות משופרות ושאלונים (Markdown)', catMdDesc: 'שאלונים, דוגמאות וגרסאות מתקדמות בפורמט Markdown.',
+        md300Link: 'שאלון 300 שאלות (מורחב)', md300Desc: 'שאלון נטיות מקצועיות מורחב - 300 שאלות (Markdown).', md300Size: '27KB', md300Date: '300 שאלות',
+        mdLangLink: 'שאלון שפה', mdLangDesc: 'שאלון נטיות מקצועיות בשפה ישיבתית.', mdLangSize: '9.3KB', mdLangDate: 'שאלון שפה',
+        mdSampleLink: 'דוגמת שאלות משופרת', mdSampleDesc: 'דוגמת שאלות משופרת - גרסה עיקרית.', mdSampleSize: '5.3KB', mdSampleDate: 'דוגמה עיקרית',
+        mdSample1Link: 'דוגמת שאלות משופרת 1', mdSample1Desc: 'דוגמת שאלות משופרת - גרסה 1.', mdSample1Size: '5.3KB', mdSample1Date: 'דוגמה 1',
+        mdSample2Link: 'דוגמת שאלות משופרת 2', mdSample2Desc: 'דוגמת שאלות משופרת - גרסה 2.', mdSample2Size: '5.3KB', mdSample2Date: 'דוגמה 2',
+        // FAQ
+        faqTitle: '❓ שאלות נפוצות',
+        faqQ1: 'איך בוחרים מבחן?', faqA1: 'מומלץ לבחור בגרסה הראשית (הכפתור הצהוב בראש הדף). שאר הגרסאות הן קודמות או ניסיוניות.',
+        faqQ2: 'מה ההבדל בין הגרסאות?', faqA2: 'הגרסה הראשית כוללת את כל הפיצ\'רים המתקדמים, שמירה אוטומטית, ניתוח תוצאות אישי ותמיכה במובייל. שאר הגרסאות הן גרסאות קודמות או ניסיוניות.',
+        faqQ3: 'איך שומרים תוצאות?', faqA3: 'בסיום המבחן ניתן להדפיס, לשמור או לשתף את התוצאות. יש גם אפשרות לשמור היסטוריית מבחנים.',
+        faqQ4: 'למי מיועדים הכלים והמחקרים?', faqA4: 'הכלים והמחקרים מיועדים למדריכים, יועצים, הורים ולבחורים עצמם - להעמקה והכוונה מקצועית.',
+        // Help popup
+        helpTitle: 'ברוכים הבאים למרכז האבחון!', helpDesc: 'כאן תמצאו את כל הכלים, השאלונים והמחקרים במקום אחד.',
+        helpLi1: 'להתחלת מבחן - לחצו על הכפתור הצהוב בראש הדף', helpLi2: 'לצפייה בגרסאות קודמות - גללו לאזור "מבחנים אינטראקטיביים"', helpLi3: 'למחקרים, מיפויים וכלים - עברו לקטגוריה המתאימה', helpLi4: 'לשאלות נוספות - עיינו ב-FAQ או פנו אלינו', helpSuccess: 'בהצלחה!',
+        // Footer
+        footerBuilt: 'נבנה אוטומטית', footerRights: 'כל הזכויות שמורות ©', lastUpdate: 'עודכן: '
+      },
+      en: {
+        dir: 'ltr', lang: 'en',
+        mainTitle: '🎯 Yeshiva Career Assessment Center – Holland Model',
+        mainDesc: 'Welcome! Here you will find all the questionnaires, assessments, research, and tools for professional guidance tailored to yeshiva students. Choose an assessment, explore research, or download resources – all in one clear and accessible place.',
+        mainBtn: '⭐ Quick Access to the Main Assessment (Recommended)',
+        mainBtnDesc: 'This is the official and most up-to-date assessment, featuring automatic saving, personalized results analysis, and full mobile support.',
+        catHtmlTitle: '🌐 Interactive Assessments (HTML)',
+        catHtmlDesc: 'All versions of the online assessment pages. The main version is recommended; other versions are previous or experimental.',
+        htmlMainLink: 'Main Version (Official)', htmlMainDesc: 'The official and most up-to-date version of the vocational interests assessment for yeshiva students.', htmlMainSize: '(Updated)', htmlMainDate: 'Updated now',
+        htmlV1Link: 'Version 1', htmlV1Desc: 'A previous version of the online assessment page.',
+        htmlV2Link: 'Version 2', htmlV2Desc: 'Another version with improvements/changes.',
+        htmlV3Link: 'Version 3', htmlV3Desc: 'An advanced/experimental version of the assessment page.',
+        htmlV4Link: 'Version 4 (Claude)', htmlV4Desc: 'A new and advanced version created by Claude – improved design, auto-save, results analysis, mobile support, and more.', htmlV4Size: '(New)', htmlV4Date: 'Updated now',
+        catPdfTitle: '📄 Questionnaires, Research, and PDF Files', catPdfDesc: 'All questionnaires, mappings, and research in PDF format.',
+        pdfYeshivaLink: 'Vocational Interests Questionnaire – Authentic Yeshiva Language', pdfYeshivaDesc: 'A questionnaire adapted to yeshiva language and culture.', pdfYeshivaSize: '2.4MB', pdfYeshivaDate: 'Latest version',
+        pdf300Link: 'Extended Vocational Interests Questionnaire – 300 Questions', pdf300Desc: 'An in-depth questionnaire with 300 items based on the Holland model.', pdf300Size: '2.2MB', pdf300Date: 'Extended version',
+        pdfKtanaLink: 'Vocational Interests Questionnaire for Yeshiva Ketana Graduates', pdfKtanaDesc: 'A vocational interests questionnaire for yeshiva ketana graduates.', pdfKtanaSize: '726KB', pdfKtanaDate: 'Adapted version',
+        pdfMapAdvLink: 'Detailed Career Mapping by Holland Fields (Extended)', pdfMapAdvDesc: 'An extended career mapping table by Holland fields.', pdfMapAdvSize: '1.7MB', pdfMapAdvDate: 'Extended mapping',
+        pdfMapLink: 'Detailed Career Mapping by Holland Fields', pdfMapDesc: 'A career mapping table by Holland fields.', pdfMapSize: '1.1MB', pdfMapDate: 'Basic mapping',
+        pdfToolsLink: 'Practical Tools for Improving the Questionnaire and Analyzing Results', pdfToolsDesc: 'Recommendations and tools for optimizing and analyzing the questionnaire.', pdfToolsSize: '1.0MB', pdfToolsDate: 'Practical tools',
+        pdfImprovedLink: 'Interests and Fields Questionnaire – Improved Version', pdfImprovedDesc: 'An improved version of the interests and fields questionnaire.', pdfImprovedSize: '395KB', pdfImprovedDate: 'Improved version',
+        pdfAnalysisLink: 'In-depth Analysis and Improvement of the Vocational Interests Questionnaire for Yeshiva Graduates', pdfAnalysisDesc: 'Research and in-depth analysis of the vocational interests questionnaire.', pdfAnalysisSize: '688KB', pdfAnalysisDate: 'In-depth analysis',
+        catMapTitle: '🗺️ Career Mapping', catMapDesc: 'Career mapping files by Holland fields.',
+        mapMainLink: 'Career Mapping – Main Version', mapMainDesc: 'Main career mapping by Holland fields.', mapMainSize: '9.5KB', mapMainDate: 'Main version',
+        mapV1Link: 'Career Mapping – Version 1', mapV1Desc: 'Another/extended version of career mapping.', mapV1Size: '16KB', mapV1Date: 'Version 1',
+        catToolsTitle: '🔧 Analysis and Research Tools', catToolsDesc: 'Auxiliary tools for results analysis and in-depth research.',
+        toolsMainLink: 'Practical Analysis Tools', toolsMainDesc: 'Practical tools for analyzing questionnaire results.', toolsMainSize: '9.1KB', toolsMainDate: 'Practical tools',
+        toolsAnalysisLink: 'Assessment Analysis', toolsAnalysisDesc: 'Analysis of yeshiva assessment results.', toolsAnalysisSize: '8.3KB', toolsAnalysisDate: 'Assessment analysis',
+        catMdTitle: '📝 Improved Versions and Questionnaires (Markdown)', catMdDesc: 'Questionnaires, samples, and advanced versions in Markdown format.',
+        md300Link: '300 Questions Questionnaire (Extended)', md300Desc: 'Extended vocational interests questionnaire – 300 questions (Markdown).', md300Size: '27KB', md300Date: '300 Questions',
+        mdLangLink: 'Language Questionnaire', mdLangDesc: 'Vocational interests questionnaire in yeshiva language.', mdLangSize: '9.3KB', mdLangDate: 'Language questionnaire',
+        mdSampleLink: 'Improved Sample Questions', mdSampleDesc: 'Improved sample questions – main version.', mdSampleSize: '5.3KB', mdSampleDate: 'Main sample',
+        mdSample1Link: 'Improved Sample Questions 1', mdSample1Desc: 'Improved sample questions – version 1.', mdSample1Size: '5.3KB', mdSample1Date: 'Sample 1',
+        mdSample2Link: 'Improved Sample Questions 2', mdSample2Desc: 'Improved sample questions – version 2.', mdSample2Size: '5.3KB', mdSample2Date: 'Sample 2',
+        // FAQ
+        faqTitle: '❓ Frequently Asked Questions',
+        faqQ1: 'How do I choose an assessment?', faqA1: 'It is recommended to choose the main version (the yellow button at the top of the page). Other versions are previous or experimental.',
+        faqQ2: 'What is the difference between the versions?', faqA2: 'The main version includes all advanced features, auto-save, personalized results analysis, and mobile support. Other versions are previous or experimental.',
+        faqQ3: 'How do I save my results?', faqA3: 'At the end of the assessment, you can print, save, or share your results. You can also save your assessment history.',
+        faqQ4: 'Who are the tools and research intended for?', faqA4: 'The tools and research are intended for counselors, advisors, parents, and students themselves – for in-depth exploration and professional guidance.',
+        // Help popup
+        helpTitle: 'Welcome to the Assessment Center!', helpDesc: 'Here you will find all the tools, questionnaires, and research in one place.',
+        helpLi1: 'To start an assessment – click the yellow button at the top of the page', helpLi2: 'To view previous versions – scroll to the "Interactive Assessments" section', helpLi3: 'For research, mappings, and tools – go to the relevant category', helpLi4: 'For more questions – see the FAQ or contact us', helpSuccess: 'Good luck!',
+        // Footer
+        footerBuilt: 'Automatically generated', footerRights: 'All rights reserved ©', lastUpdate: 'Updated: '
+      },
+      ru: {
+        dir: 'ltr', lang: 'ru',
+        mainTitle: '🎯 Центр профессиональной диагностики для йешив – Модель Холланда',
+        mainDesc: 'Добро пожаловать! Здесь вы найдете все опросники, тесты, исследования и инструменты для профессионального консультирования учеников йешивы. Выберите тест, изучите исследования или скачайте полезные материалы – всё в одном удобном месте.',
+        mainBtn: '⭐ Быстрый переход к основному тесту (рекомендуется)',
+        mainBtnDesc: 'Это официальный и самый актуальный тест с автоматическим сохранением, персонализированным анализом результатов и полной поддержкой мобильных устройств.',
+        catHtmlTitle: '🌐 Интерактивные тесты (HTML)',
+        catHtmlDesc: 'Все версии онлайн-тестов. Основная версия рекомендуется, остальные — предыдущие или экспериментальные.',
+        htmlMainLink: 'Основная версия (официальная)', htmlMainDesc: 'Официальная и самая актуальная версия теста профессиональных интересов для учеников йешивы.', htmlMainSize: '(Обновлено)', htmlMainDate: 'Обновлено сейчас',
+        htmlV1Link: 'Версия 1', htmlV1Desc: 'Предыдущая версия онлайн-теста.',
+        htmlV2Link: 'Версия 2', htmlV2Desc: 'Другая версия с улучшениями/изменениями.',
+        htmlV3Link: 'Версия 3', htmlV3Desc: 'Продвинутая/экспериментальная версия теста.',
+        htmlV4Link: 'Версия 4 (Claude)', htmlV4Desc: 'Новая и продвинутая версия, созданная Claude – улучшенный дизайн, автосохранение, анализ результатов, поддержка мобильных устройств и др.', htmlV4Size: '(Новое)', htmlV4Date: 'Обновлено сейчас',
+        catPdfTitle: '📄 Опросники, исследования и PDF-файлы', catPdfDesc: 'Все опросники, карты и исследования в формате PDF.',
+        pdfYeshivaLink: 'Опросник профессиональных интересов – на языке йешивы', pdfYeshivaDesc: 'Опросник, адаптированный к языку и культуре йешивы.', pdfYeshivaSize: '2.4MB', pdfYeshivaDate: 'Последняя версия',
+        pdf300Link: 'Расширенный опросник профессиональных интересов – 300 вопросов', pdf300Desc: 'Глубокий опросник с 300 пунктами по модели Холланда.', pdf300Size: '2.2MB', pdf300Date: 'Расширенная версия',
+        pdfKtanaLink: 'Опросник для выпускников ешивы ктана', pdfKtanaDesc: 'Опросник профессиональных интересов для выпускников ешивы ктана.', pdfKtanaSize: '726KB', pdfKtanaDate: 'Адаптированная версия',
+        pdfMapAdvLink: 'Детальная карта профессий по Холланду (расширенная)', pdfMapAdvDesc: 'Расширенная таблица профессий по сферам Холланда.', pdfMapAdvSize: '1.7MB', pdfMapAdvDate: 'Расширенная карта',
+        pdfMapLink: 'Детальная карта профессий по Холланду', pdfMapDesc: 'Таблица профессий по сферам Холланда.', pdfMapSize: '1.1MB', pdfMapDate: 'Базовая карта',
+        pdfToolsLink: 'Практические инструменты для улучшения опросника и анализа результатов', pdfToolsDesc: 'Рекомендации и инструменты для оптимизации и анализа опросника.', pdfToolsSize: '1.0MB', pdfToolsDate: 'Практические инструменты',
+        pdfImprovedLink: 'Опросник интересов и сфер – улучшенная версия', pdfImprovedDesc: 'Улучшенная версия опросника интересов и сфер.', pdfImprovedSize: '395KB', pdfImprovedDate: 'Улучшенная версия',
+        pdfAnalysisLink: 'Глубокий анализ и улучшение опросника профессиональных интересов для выпускников йешивы', pdfAnalysisDesc: 'Исследование и глубокий анализ опросника профессиональных интересов.', pdfAnalysisSize: '688KB', pdfAnalysisDate: 'Глубокий анализ',
+        catMapTitle: '🗺️ Карта профессий (Career Mapping)', catMapDesc: 'Файлы карты профессий по сферам Холланда.',
+        mapMainLink: 'Карта профессий – основная версия', mapMainDesc: 'Основная карта профессий по сферам Холланда.', mapMainSize: '9.5KB', mapMainDate: 'Основная версия',
+        mapV1Link: 'Карта профессий – версия 1', mapV1Desc: 'Другая/расширенная версия карты профессий.', mapV1Size: '16KB', mapV1Date: 'Версия 1',
+        catToolsTitle: '🔧 Инструменты анализа и исследований', catToolsDesc: 'Вспомогательные инструменты для анализа результатов и глубоких исследований.',
+        toolsMainLink: 'Практические инструменты анализа', toolsMainDesc: 'Практические инструменты для анализа результатов опросников.', toolsMainSize: '9.1KB', toolsMainDate: 'Практические инструменты',
+        toolsAnalysisLink: 'Анализ опросника', toolsAnalysisDesc: 'Анализ результатов профессиональной диагностики.', toolsAnalysisSize: '8.3KB', toolsAnalysisDate: 'Анализ опросника',
+        catMdTitle: '📝 Улучшенные версии и опросники (Markdown)', catMdDesc: 'Опросники, примеры и продвинутые версии в формате Markdown.',
+        md300Link: 'Опросник на 300 вопросов (расширенный)', md300Desc: 'Расширенный опросник профессиональных интересов – 300 вопросов (Markdown).', md300Size: '27KB', md300Date: '300 вопросов',
+        mdLangLink: 'Языковой опросник', mdLangDesc: 'Опросник профессиональных интересов на языке йешивы.', mdLangSize: '9.3KB', mdLangDate: 'Языковой опросник',
+        mdSampleLink: 'Улучшенный пример вопросов', mdSampleDesc: 'Улучшенный пример вопросов – основная версия.', mdSampleSize: '5.3KB', mdSampleDate: 'Основной пример',
+        mdSample1Link: 'Улучшенный пример вопросов 1', mdSample1Desc: 'Улучшенный пример вопросов – версия 1.', mdSample1Size: '5.3KB', mdSample1Date: 'Пример 1',
+        mdSample2Link: 'Улучшенный пример вопросов 2', mdSample2Desc: 'Улучшенный пример вопросов – версия 2.', mdSample2Size: '5.3KB', mdSample2Date: 'Пример 2',
+        // FAQ
+        faqTitle: '❓ Часто задаваемые вопросы',
+        faqQ1: 'Как выбрать тест?', faqA1: 'Рекомендуется выбрать основную версию (желтая кнопка вверху страницы). Остальные версии — предыдущие или экспериментальные.',
+        faqQ2: 'В чем разница между версиями?', faqA2: 'Основная версия включает все современные функции, автосохранение, персонализированный анализ результатов и поддержку мобильных устройств. Остальные версии — предыдущие или экспериментальные.',
+        faqQ3: 'Как сохранить результаты?', faqA3: 'В конце теста вы можете распечатать, сохранить или поделиться результатами. Также можно сохранить историю тестов.',
+        faqQ4: 'Для кого предназначены инструменты и исследования?', faqA4: 'Инструменты и исследования предназначены для консультантов, советников, родителей и самих учеников — для глубокого анализа и профессионального выбора.',
+        // Help popup
+        helpTitle: 'Добро пожаловать в центр диагностики!', helpDesc: 'Здесь вы найдете все инструменты, опросники и исследования в одном месте.',
+        helpLi1: 'Для начала теста — нажмите на желтую кнопку вверху страницы', helpLi2: 'Для просмотра предыдущих версий — прокрутите к разделу "Интерактивные тесты"', helpLi3: 'Для исследований, карт и инструментов — перейдите в нужную категорию', helpLi4: 'Для дополнительных вопросов — смотрите FAQ или свяжитесь с нами', helpSuccess: 'Удачи!',
+        // Footer
+        footerBuilt: 'Создано автоматически', footerRights: 'Все права защищены ©', lastUpdate: 'Обновлено: '
+      }
+    };
+
+    function setLang(lang) {
+      const t = translations[lang];
+      document.documentElement.dir = t.dir;
+      document.documentElement.lang = t.lang;
+      document.getElementById('main-title').textContent = t.mainTitle;
+      document.getElementById('main-desc').textContent = t.mainDesc;
+      document.getElementById('main-btn').textContent = t.mainBtn;
+      document.getElementById('main-btn-desc').textContent = t.mainBtnDesc;
+      document.getElementById('cat-html-title').textContent = t.catHtmlTitle;
+      document.getElementById('cat-html-desc').textContent = t.catHtmlDesc;
+      document.getElementById('html-main-link').textContent = t.htmlMainLink;
+      document.getElementById('html-main-desc').textContent = t.htmlMainDesc;
+      document.getElementById('html-main-size').textContent = t.htmlMainSize;
+      document.getElementById('html-main-date').textContent = t.htmlMainDate;
+      document.getElementById('html-v1-link').textContent = t.htmlV1Link;
+      document.getElementById('html-v1-desc').textContent = t.htmlV1Desc;
+      document.getElementById('html-v2-link').textContent = t.htmlV2Link;
+      document.getElementById('html-v2-desc').textContent = t.htmlV2Desc;
+      document.getElementById('html-v3-link').textContent = t.htmlV3Link;
+      document.getElementById('html-v3-desc').textContent = t.htmlV3Desc;
+      document.getElementById('html-v4-link').textContent = t.htmlV4Link;
+      document.getElementById('html-v4-desc').textContent = t.htmlV4Desc;
+      document.getElementById('html-v4-size').textContent = t.htmlV4Size;
+      document.getElementById('html-v4-date').textContent = t.htmlV4Date;
+      document.getElementById('cat-pdf-title').textContent = t.catPdfTitle;
+      document.getElementById('cat-pdf-desc').textContent = t.catPdfDesc;
+      document.getElementById('pdf-yeshiva-link').textContent = t.pdfYeshivaLink;
+      document.getElementById('pdf-yeshiva-desc').textContent = t.pdfYeshivaDesc;
+      document.getElementById('pdf-yeshiva-size').textContent = t.pdfYeshivaSize;
+      document.getElementById('pdf-yeshiva-date').textContent = t.pdfYeshivaDate;
+      document.getElementById('pdf-300-link').textContent = t.pdf300Link;
+      document.getElementById('pdf-300-desc').textContent = t.pdf300Desc;
+      document.getElementById('pdf-300-size').textContent = t.pdf300Size;
+      document.getElementById('pdf-300-date').textContent = t.pdf300Date;
+      document.getElementById('pdf-ktana-link').textContent = t.pdfKtanaLink;
+      document.getElementById('pdf-ktana-desc').textContent = t.pdfKtanaDesc;
+      document.getElementById('pdf-ktana-size').textContent = t.pdfKtanaSize;
+      document.getElementById('pdf-ktana-date').textContent = t.pdfKtanaDate;
+      document.getElementById('pdf-map-adv-link').textContent = t.pdfMapAdvLink;
+      document.getElementById('pdf-map-adv-desc').textContent = t.pdfMapAdvDesc;
+      document.getElementById('pdf-map-adv-size').textContent = t.pdfMapAdvSize;
+      document.getElementById('pdf-map-adv-date').textContent = t.pdfMapAdvDate;
+      document.getElementById('pdf-map-link').textContent = t.pdfMapLink;
+      document.getElementById('pdf-map-desc').textContent = t.pdfMapDesc;
+      document.getElementById('pdf-map-size').textContent = t.pdfMapSize;
+      document.getElementById('pdf-map-date').textContent = t.pdfMapDate;
+      document.getElementById('pdf-tools-link').textContent = t.pdfToolsLink;
+      document.getElementById('pdf-tools-desc').textContent = t.pdfToolsDesc;
+      document.getElementById('pdf-tools-size').textContent = t.pdfToolsSize;
+      document.getElementById('pdf-tools-date').textContent = t.pdfToolsDate;
+      document.getElementById('pdf-improved-link').textContent = t.pdfImprovedLink;
+      document.getElementById('pdf-improved-desc').textContent = t.pdfImprovedDesc;
+      document.getElementById('pdf-improved-size').textContent = t.pdfImprovedSize;
+      document.getElementById('pdf-improved-date').textContent = t.pdfImprovedDate;
+      document.getElementById('pdf-analysis-link').textContent = t.pdfAnalysisLink;
+      document.getElementById('pdf-analysis-desc').textContent = t.pdfAnalysisDesc;
+      document.getElementById('pdf-analysis-size').textContent = t.pdfAnalysisSize;
+      document.getElementById('pdf-analysis-date').textContent = t.pdfAnalysisDate;
+      document.getElementById('cat-map-title').textContent = t.catMapTitle;
+      document.getElementById('cat-map-desc').textContent = t.catMapDesc;
+      document.getElementById('map-main-link').textContent = t.mapMainLink;
+      document.getElementById('map-main-desc').textContent = t.mapMainDesc;
+      document.getElementById('map-main-size').textContent = t.mapMainSize;
+      document.getElementById('map-main-date').textContent = t.mapMainDate;
+      document.getElementById('map-v1-link').textContent = t.mapV1Link;
+      document.getElementById('map-v1-desc').textContent = t.mapV1Desc;
+      document.getElementById('map-v1-size').textContent = t.mapV1Size;
+      document.getElementById('map-v1-date').textContent = t.mapV1Date;
+      document.getElementById('cat-tools-title').textContent = t.catToolsTitle;
+      document.getElementById('cat-tools-desc').textContent = t.catToolsDesc;
+      document.getElementById('tools-main-link').textContent = t.toolsMainLink;
+      document.getElementById('tools-main-desc').textContent = t.toolsMainDesc;
+      document.getElementById('tools-main-size').textContent = t.toolsMainSize;
+      document.getElementById('tools-main-date').textContent = t.toolsMainDate;
+      document.getElementById('tools-analysis-link').textContent = t.toolsAnalysisLink;
+      document.getElementById('tools-analysis-desc').textContent = t.toolsAnalysisDesc;
+      document.getElementById('tools-analysis-size').textContent = t.toolsAnalysisSize;
+      document.getElementById('tools-analysis-date').textContent = t.toolsAnalysisDate;
+      document.getElementById('cat-md-title').textContent = t.catMdTitle;
+      document.getElementById('cat-md-desc').textContent = t.catMdDesc;
+      document.getElementById('md-300-link').textContent = t.md300Link;
+      document.getElementById('md-300-desc').textContent = t.md300Desc;
+      document.getElementById('md-300-size').textContent = t.md300Size;
+      document.getElementById('md-300-date').textContent = t.md300Date;
+      document.getElementById('md-lang-link').textContent = t.mdLangLink;
+      document.getElementById('md-lang-desc').textContent = t.mdLangDesc;
+      document.getElementById('md-lang-size').textContent = t.mdLangSize;
+      document.getElementById('md-lang-date').textContent = t.mdLangDate;
+      document.getElementById('md-sample-link').textContent = t.mdSampleLink;
+      document.getElementById('md-sample-desc').textContent = t.mdSampleDesc;
+      document.getElementById('md-sample-size').textContent = t.mdSampleSize;
+      document.getElementById('md-sample-date').textContent = t.mdSampleDate;
+      document.getElementById('md-sample1-link').textContent = t.mdSample1Link;
+      document.getElementById('md-sample1-desc').textContent = t.mdSample1Desc;
+      document.getElementById('md-sample1-size').textContent = t.mdSample1Size;
+      document.getElementById('md-sample1-date').textContent = t.mdSample1Date;
+      document.getElementById('md-sample2-link').textContent = t.mdSample2Link;
+      document.getElementById('md-sample2-desc').textContent = t.mdSample2Desc;
+      document.getElementById('md-sample2-size').textContent = t.mdSample2Size;
+      document.getElementById('md-sample2-date').textContent = t.mdSample2Date;
+      // FAQ
+      document.getElementById('faq-title').textContent = t.faqTitle;
+      document.getElementById('faq-q1').textContent = t.faqQ1;
+      document.getElementById('faq-a1').textContent = t.faqA1;
+      document.getElementById('faq-q2').textContent = t.faqQ2;
+      document.getElementById('faq-a2').textContent = t.faqA2;
+      document.getElementById('faq-q3').textContent = t.faqQ3;
+      document.getElementById('faq-a3').textContent = t.faqA3;
+      document.getElementById('faq-q4').textContent = t.faqQ4;
+      document.getElementById('faq-a4').textContent = t.faqA4;
+      // Help popup
+      document.getElementById('help-title').textContent = t.helpTitle;
+      document.getElementById('help-desc').textContent = t.helpDesc;
+      document.getElementById('help-li1').textContent = t.helpLi1;
+      document.getElementById('help-li2').textContent = t.helpLi2;
+      document.getElementById('help-li3').textContent = t.helpLi3;
+      document.getElementById('help-li4').textContent = t.helpLi4;
+      document.getElementById('help-success').textContent = t.helpSuccess;
+      // Footer
+      document.getElementById('footer-built').textContent = t.footerBuilt;
+      document.getElementById('footer-rights').textContent = t.footerRights;
+      document.getElementById('lastUpdate').textContent = t.lastUpdate + new Date().toLocaleDateString(t.lang === 'he' ? 'he-IL' : (t.lang === 'ru' ? 'ru-RU' : 'en-US'));
+      // Highlight selected language tab
+      document.querySelectorAll('.lang-tab').forEach(btn => {
+        btn.classList.toggle('selected', btn.getAttribute('data-lang') === lang);
+      });
+    }
+    document.querySelectorAll('.lang-tab').forEach(btn => {
+      btn.addEventListener('click', function() {
+        setLang(this.getAttribute('data-lang'));
+      });
+    });
+    // Set default language on load
+    setLang('he');
+    document.getElementById('lastUpdate').textContent = (translations[document.documentElement.lang]?.lastUpdate || 'עודכן: ') + new Date().toLocaleDateString(document.documentElement.lang === 'he' ? 'he-IL' : (document.documentElement.lang === 'ru' ? 'ru-RU' : 'en-US'));
+    document.addEventListener('click', function(e) {
+      if (!e.target.classList.contains('help-btn') && !e.target.closest('.help-popup')) {
+        document.getElementById('helpPopup').classList.remove('active');
+      }
+    });
+  </script>
+</body>
+</html> 
