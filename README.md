@@ -1,3 +1,3 @@
-# Holland career model vocational assessment for yeshiva students | אבחון ישיבתי
-
-MIT © 2026 [David Patlas](https://github.com/DavidPatlas-AI)
+# אבחון ישיבתי — Holland Career Assessment
+מבחן אבחון תעסוקתי (מודל הולנד) לבוגרי ישיבה, עם שאלונים ומיפוי מקצועות (PDF).
+**הרצה:** פתח `dashboard.html`.
